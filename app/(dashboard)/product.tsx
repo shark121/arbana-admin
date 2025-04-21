@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { Link, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from './actions';
 import { EventSchemaType } from 'types';
@@ -32,7 +32,9 @@ export function Product({ product }: { product: EventSchemaType }) {
         </Badge>
       </TableCell>
       <TableCell className="hidden md:table-cell">{`${new Date(product.createdAt).toLocaleDateString()}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{new Date(product.startDate).toLocaleDateString()}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {new Date(product.startDate).toLocaleDateString()}
+      </TableCell>
       <TableCell className="hidden md:table-cell">
         {/* {product.availableAt.toLocaleDateString("en-US")} */}
       </TableCell>
@@ -46,10 +48,12 @@ export function Product({ product }: { product: EventSchemaType }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View</DropdownMenuItem>
+              <DropdownMenuItem>
+                <button onClick={()=>window.location.href = `/edit/${product.eventId}`}>Edit</button>
+              </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
-                <button type="submit">Edit</button>
+                <button>View</button>
               </form>
             </DropdownMenuItem>
           </DropdownMenuContent>
