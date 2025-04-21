@@ -23,6 +23,9 @@
       "@/components": ["components"],
       "@/": ["./*"],
       "@/app/*": ["app/*"],
+      "@/hooks/*": ["hooks/*"], 
+      "@/contexts/*": ["contexts/*"],
+      "@/authentication/*": ["authentication/*"],
     },
     "plugins": [
       {

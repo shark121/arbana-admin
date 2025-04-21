@@ -1,17 +1,14 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import dotenv from "dotenv";
 import Cookies from "js-cookie";
 import {
   UserCredential,
   User,
   getAdditionalUserInfo,
-  GoogleAuthProvider,
 } from "firebase/auth";
 import { database } from "../firebase.config";
 import { setDoc, doc, collection } from "firebase/firestore";
 import { UserInfo, UserInfoWithToken, UserData } from "../types";
-import { use } from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

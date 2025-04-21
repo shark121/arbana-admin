@@ -1,11 +1,11 @@
-import { Poiret_One } from "next/font/google";
+// import { Poiret_One } from "next/font/google";
 import Verified from "./verified";
 
-export const poFont = Poiret_One({
-  weight: ["400"],
-  subsets: ["latin"],
-  preload: true,
-});
+// export const poFont = Poiret_One({
+//   weight: ["400"],
+//   subsets: ["latin"],
+//   preload: true,
+// });
 
 export default function Logo({
   width,
@@ -18,7 +18,7 @@ export default function Logo({
 }) {
   return (
     <div
-      className={`${poFont.className} ${text ?? "text-[3rem] relative"} ${
+      className={`${""} ${text ?? "text-[3rem] relative"} ${
         height ?? "100% flex flex-col items-center justify-center"
       } ${width ?? "100%"}`}
     >
