@@ -81,7 +81,7 @@ async function sendCreateRequest({
 
   console.log(event, "requestFormData");
 
-  return await fetch("/api/data/create/event/", {
+  return await fetch("/api/events/create/", {
     method: "POST",
     body: requestFormData,
   })
@@ -302,7 +302,7 @@ export default function CreateEvent() {
 
   if (isLoading || !mapIsLoaded) return <Loading />;
 
-  if (success) return <SuccessAnimation navTo="/myEvents" />;
+  if (success) return <SuccessAnimation navTo="/" />;
 
   // function SubmitTest(e: any) {
   //   console.log(e);
