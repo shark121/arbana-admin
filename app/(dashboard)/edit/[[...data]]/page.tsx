@@ -356,7 +356,7 @@ export default function EventInfo(params: {
       });
   };
 
-  if (success) return <SuccessAnimation navTo="/myEvents" />;
+  if (success) return <SuccessAnimation navTo="/" />;
 
   if (isLoading || !mapIsLoaded) return <Loading />;
 

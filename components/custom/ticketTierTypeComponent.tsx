@@ -39,6 +39,9 @@ type EventType = EventSchemaType & { imageFile: any };
 // };
 
 export default function EventComponent({ event }: { event: EventType }) {
+
+  return <></>
+  
   function handleOnClick() {
     const eventInfo = JSON.stringify(event);
     const eventID = generateRandomId(10);
