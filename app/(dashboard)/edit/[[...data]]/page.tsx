@@ -12,10 +12,8 @@ import {
   getCookie,
 } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
 import { Selector } from "../../../../components/custom/selector";
 import { categoriesList } from "../../../../data/categories";
-// import { CameraIcon, EditIcon, Image, X } from "lucide-react";
 import z from "zod";
 import {LocalUserType} from "../../../../types"
 import  AddTicket from "../../../../components/events/AddTicket";
@@ -26,9 +24,6 @@ import ShowPlaces from "../../../../components/mapComponents/showPlaces";
 import Cookies from "js-cookie";
 import { useLoadScript } from "@react-google-maps/api";
 
-// import TicketTierType, {
-//   AddNewTicket,
-// } from "../../../../components/custom/ticketTierTypeComponent";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -226,7 +221,7 @@ export default function EventInfo(params: {
 
   useEffect(() => {
     console.log(eventState, "event state");
-    setAvailableSeatsState(
+    eventState && setSeatsState(
       eventState?.availableSeats as unknown as AvailableSeatsType[]
     );
     setEventIDState(eventState?.eventId as number);
