@@ -5,6 +5,7 @@ import {
   Package,
   Package2,
   PanelLeft,
+  Plus,
   Settings,
   ShoppingCart,
   Users2
@@ -80,6 +81,10 @@ function DesktopNav() {
 
         <NavItem href="/" label="Products">
           <Package className="h-5 w-5" />
+        </NavItem>
+         
+         <NavItem href="/create" label="Create Event">
+          <Plus className="h-5 w-5" />
         </NavItem>
 
         <NavItem href="/customers" label="Customers">

@@ -40,15 +40,15 @@ export default function ProductsPage(
   const userDocsRef = collection(database, "users");
 
   useEffect(() => {
-    // const userJSON = JSON.parse((Cookies.get("user") as string) || "");
-    // userJSON && setUserState(userJSON);
+    const userJSON = JSON.parse((Cookies.get("user") as string) || "");
+    userJSON && setUserState(userJSON);
 
-    fetch(`/api/user_events/`, {
+    fetch(`/api/events/read/`+ userJSON.uid, {
       method: "POST",
       headers: {
         "Content-Type": "text/plain",
       },
-      body: JSON.stringify({ uid: "h4tLf5B8YFdGB05pbIesB0EuDxj2" }),
+      body: JSON.stringify({ uid: userJSON.uid }),
     })
       .then((response) => response.json())
       .then((data: { data: EventType[] }) => {

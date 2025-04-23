@@ -1,100 +1,178 @@
-import { useState, useEffect } from "react";
-import TicketTierType , {AddNewTicket}from "@/components/custom/ticketTierTypeComponent";
-import { Button } from "@/components/ui/button";
-import { AvailableSeatsType } from "../../types";
-import { group } from "console";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import { AvailableSeatsType } from '../../types';
+import { Badge } from '@/components/ui/badge';
+import { Trash2 } from 'lucide-react';
 
-export function AddTicket({
-  setAvailableSeatsState,
-  availableSeatsState,
-  seatsState,
-  setSeatsState,
+export default function AddTicket({
+  tickets,
+  setTickets
 }: {
-  seatsState: AvailableSeatsType[];
-  setSeatsState: React.Dispatch<React.SetStateAction<AvailableSeatsType[]>>;
-  setAvailableSeatsState: React.Dispatch<
-    React.SetStateAction<AvailableSeatsType[]>
-  >;
-  availableSeatsState: AvailableSeatsType[];
+  tickets: AvailableSeatsType[];
+  setTickets: React.Dispatch<React.SetStateAction<AvailableSeatsType[]>>;
 }) {
-  const [isAddingNewTicket, setIsAddingNewTicket] = useState<boolean>(false);
+  // State for the form inputs
+  const [ticketInput, setTicketInput] = useState<AvailableSeatsType>({
+    tier: '',
+    price: 0,
+    groupNumber: 1,
+    quantity: 1
+  });
 
-  useEffect(() => {
-    if (availableSeatsState) {
-      setSeatsState((prevSeatsState) => {
-        const existingTiers = new Set(prevSeatsState.map((seat) => seat.tier));
-        const newSeats = availableSeatsState.filter(
-          (seat) => !existingTiers.has(seat.tier)
-        );
-        return [...prevSeatsState, ...newSeats];
-      });
-    }
-  }, [availableSeatsState]);
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setTicketInput((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-  function RemoveTicketType({ seat }: { seat: AvailableSeatsType }) {
-    setSeatsState((seatsState) =>
-      seatsState.filter((el) => el.tier !== seat.tier)
-    );
-  }
-
-  function AddTicketType(
-    ticketTier: string,
-    tierPrice: number,
-    tierQuantity: number,
-    groupNumber: number
-  ) {
-    // Validate inputs
-   
-    console.log(ticketTier, tierPrice, tierQuantity, "............");
-
-    if (!ticketTier.trim()) {
-      console.error("Ticket Tier cannot be empty.");
+  // Handler for adding a ticket
+  const handleAddTicket = () => {
+    // Validate inputs (basic validation)
+    if (
+      !ticketInput.tier ||
+      !ticketInput.price ||
+      !ticketInput.groupNumber ||
+      !ticketInput.quantity
+    ) {
       return;
     }
-    if (tierPrice < 0) {
-      console.error("Price must be a positive number.");
+
+    if (tickets.some((seat) => seat.tier === ticketInput.tier)) {
+      window.alert('Ticket tier already exists');
       return;
     }
-    if (tierQuantity <= 0) {
-      console.error("Quantity must be a positive number.");
-      return;
-    }
-  
-    // Check if the ticket tier already exists
-    if (seatsState.some((el) => el.tier === ticketTier)) {
-      console.error(`Tier "${ticketTier}" already exists.`);
-      return;
-    }
-  
-    // Add the new ticket
-    setSeatsState((seatsState) => [
-      ...seatsState,
-      { tier: ticketTier, quantity: tierQuantity, price: tierPrice, groupNumber },
-    ]);
-  }
-  
+
+    // Create a new ticket with a unique ID
+    const newTicket = {
+      id: Date.now(),
+      ...ticketInput
+    };
+
+    // Add the new ticket to the tickets array
+    setTickets((prev) => [...prev, newTicket]);
+
+    // Clear the form
+    setTicketInput({
+      tier: '',
+      price: 0,
+      groupNumber: 1,
+      quantity: 0
+    });
+  };
+
+  // Handler for deleting a ticket
+  const handleDeleteTicket = (tier: string) => {
+    setTickets((prev) => prev.filter((ticket) => ticket.tier !== tier));
+  };
 
   return (
-    <div>
-      {isAddingNewTicket ? (
-        <AddNewTicket
-          seatsState={seatsState}
-          setSeatsState={setSeatsState}
-          setIsAddingNewTicket={setIsAddingNewTicket}
-        />
-      ) : (
-        <Button type="button" onClick={() => setIsAddingNewTicket(true)}>
-          Add New Tier
-        </Button>
-      )}
-      {seatsState.map((el) => (
-        <TicketTierType
-          RemoveTicketType={RemoveTicketType}
-          AddTicketType={AddTicketType}
-          seat={el}
-          key={el.tier}
-        />
-      ))}
+    <div className='flex  items-center justify-center flex-wrap bg-gray-100'>
+      <div className="flex flex-col max-w-2xl mx-auto ">
+        <Card>
+          <CardHeader>
+            <CardTitle>Add Ticket Details</CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="tier">Tier</Label>
+              <Input
+                id="tier"
+                name="tier"
+                value={ticketInput.tier}
+                onChange={handleInputChange}
+                placeholder="e.g. VIP, Standard"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="price">Price</Label>
+              <Input
+                id="price"
+                name="price"
+                type="number"
+                value={ticketInput.price}
+                onChange={handleInputChange}
+                placeholder="e.g. 100"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="number">Number</Label>
+              <Input
+                id="number"
+                name="number"
+                defaultValue={ticketInput.groupNumber ?? 0}
+                onChange={handleInputChange}
+                // placeholder="e.g. A1, B2"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="quantity">Quantity</Label>
+              <Input
+                id="quantity"
+                name="quantity"
+                type="number"
+                value={ticketInput.quantity}
+                onChange={handleInputChange}
+                placeholder="e.g. 2"
+              />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button type="button" onClick={handleAddTicket}>
+              Add Ticket
+            </Button>
+          </CardFooter>
+        </Card>
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold">Tickets ({tickets.length})</h2>
+
+          {tickets.length === 0 ? (
+            <div className="text-center p-6 border rounded-lg bg-gray-50">
+              No tickets added yet
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {tickets.map((ticket) => (
+                <Card key={ticket.tier} className="bg-white">
+                  <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="bg-blue-50">
+                          {ticket.tier}
+                        </Badge>
+                        <span className="font-medium">
+                          #{ticket.groupNumber}
+                        </span>
+                      </div>
+                      <div className="flex gap-4 text-sm text-gray-600">
+                        <span>Price: ${ticket.price}</span>
+                        <span>Qty: {ticket.quantity}</span>
+                      </div>
+                    </div>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDeleteTicket(ticket.tier)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -152,7 +152,7 @@ export const EventSchema = z
       .describe("The coordinates of the ticket"),
     locationId: z.string(),
   })
-  .strict();
+  // .strict();
 //   .refine((data) => new Date(data.startDate) < new Date(data.endDate), {
 //     message: "Start date must be before end date",
 //     path: ["endDate"],

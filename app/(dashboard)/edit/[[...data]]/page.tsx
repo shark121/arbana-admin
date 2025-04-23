@@ -18,7 +18,7 @@ import { categoriesList } from "../../../../data/categories";
 // import { CameraIcon, EditIcon, Image, X } from "lucide-react";
 import z from "zod";
 import {LocalUserType} from "../../../../types"
-import { AddTicket } from "../../../../components/events/AddTicket";
+import  AddTicket from "../../../../components/events/AddTicket";
 import { CategoriesComponent } from "../../../../components/events/categoriesComponent";
 import Calendar from "../../../../components/custom/calendar";
 import TicketPopOver from "../../../../components/custom/ticketPopOver";
@@ -87,7 +87,7 @@ async function sendUpdateRequest({ event, auth }: { event: EventSchemaType, auth
   requestFormData.append("rest", JSON.stringify(rest));
   requestFormData.append("auth", JSON.stringify(auth));
 
-  await fetch("/api/data/update/user_events/", {
+  await fetch("/api/events/update/", {
     method: "POST",
     body: requestFormData,
   })
@@ -402,10 +402,8 @@ export default function EventInfo(params: {
             </div>
             {
               <AddTicket
-                setAvailableSeatsState={setAvailableSeatsState}
-                availableSeatsState={availableSeatsState}
-                seatsState={seatsState}
-                setSeatsState={setSeatsState}
+                tickets={seatsState}
+                setTickets={setSeatsState}
               />
             }
             <Selector
