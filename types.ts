@@ -3,6 +3,23 @@ import {User} from "firebase/auth"
 
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
+const statisticsSchema = z.object({
+  date: z.string(),
+  booking: z.array(
+    z.object({
+      tier: z.number(),
+      userId: z.string(),
+      eventId: z.string(),
+      transaction: z.string()
+    })
+  ),
+  amount: z.number(),
+  donations: z.number()
+});
+
+
+export type StatisticsSchemaType = z.infer<typeof statisticsSchema>;
+
 export const CreatorSchema = z.object({
   name: z.string(),
   uid: z.string(),
