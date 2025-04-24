@@ -38,7 +38,7 @@ async function createNewUserWithEmailAndPassword(
             variant: 'default'
           });
 
-          window.location.href = '/home';
+          window.location.href = '/';
         })
         .catch((error) => {
           console.error(error.code);

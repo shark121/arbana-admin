@@ -27,7 +27,7 @@ export default function Autocomplete({
         // bg-gray-100 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm
 
   return (
-    <div className="absolute  w-full">
+    <div className="absolute  w-[40rem]">
       <Combobox
         value={selected}
         onChange={setSelectedPlace}

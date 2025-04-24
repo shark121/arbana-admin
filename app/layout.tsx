@@ -11,19 +11,19 @@ import { auth } from "../firebase.config";
 import { storeUserInfo } from "@/lib/utils";
 import Cookies from "js-cookie";
 
-// onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-//   console.log("auth")
+  console.log("auth")
 
-//   const userDoesNotExist = Cookies.get("user") === null || Cookies.get("user") === undefined;
+  const userDoesNotExist = Cookies.get("user") === null || Cookies.get("user") === undefined;
   
-//   console.log(user, "user from layout............")
-//   try {
-//     userDoesNotExist && user && user.emailVerified && await storeUserInfo(user);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// })
+  console.log(user, "user from layout............")
+  try {
+    userDoesNotExist && user && user.emailVerified && await storeUserInfo(user);
+  } catch (e) {
+    console.log(e);
+  }
+})
 
 
 
@@ -35,81 +35,13 @@ import Cookies from "js-cookie";
 // //   viewport: "width=device-width, initial-scale=1, maximum-scale=1 ",
 // // };
 
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-
-//   return (
-//     <html lang="en">
-//       <UserProvider>
-//         <body>
-//           <main>{children}</main>
-//           <Toaster />
-//         </body>
-//       </UserProvider>
-//     </html>
-//   );
-// }
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  const router = useRouter();
-  const auth = getAuth();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("Auth state changed in layout");
-      console.log("User from auth state (layout):", user);
-
-      if (user) {
-        console.log("User is signed in (layout)");
-        // if (user.emailVerified) {
-        if (true) {
-          console.log("Email is verified (layout)");
-          const userCookie = Cookies.get("user");
-          const userDoesNotExistInCookie = !userCookie;
-
-          if (userDoesNotExistInCookie) {
-            console.log("User info not in cookie, storing... (layout)");
-            try {
-              await storeUserInfo(user);
-              // Optionally, you might want to refresh user data or navigate
-              // if (router.pathname === '/login' || router.pathname === '/register') {
-              //   router.push('/dashboard');
-              // }
-            } catch (error) {
-              console.error("Error storing user info (layout):", error);
-            }
-          } else {
-            console.log("User info already in cookie (layout)");
-            // Optionally, refresh user data if needed
-          }
-        } else {
-          console.log("Email not verified, redirecting to verification page (layout)");
-          if (window.location.href !== '/verify-email') {
-            router.push('/verify-email');
-          }
-        }
-      } else {
-        console.log("User is signed out, redirecting to login (layout)");
-        Cookies.remove("user");
-        if (window.location.href !== '/auth') {
-          router.push('/auth');
-        }
-      }
-    });
-
-    return () => unsubscribe();
-  }, [auth, router])
-   
-
-    return (
+  return (
     <html lang="en">
       <UserProvider>
         <body>
@@ -120,3 +52,71 @@ export default function RootLayout({
     </html>
   );
 }
+
+// export default function RootLayout({
+//   children,
+// }: Readonly<{
+//   children: React.ReactNode;
+// }>) {
+
+//   const router = useRouter();
+//   const auth = getAuth();
+
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+//       console.log("Auth state changed in layout");
+//       console.log("User from auth state (layout):", user);
+
+//       if (user) {
+//         console.log("User is signed in (layout)");
+//         // if (user.emailVerified) {
+//         if (true) {
+//           console.log("Email is verified (layout)");
+//           const userCookie = Cookies.get("user");
+//           const userDoesNotExistInCookie = !userCookie;
+
+//           if (userDoesNotExistInCookie) {
+//             console.log("User info not in cookie, storing... (layout)");
+//             try {
+//               await storeUserInfo(user);
+//               // Optionally, you might want to refresh user data or navigate
+//               // if (router.pathname === '/login' || router.pathname === '/register') {
+//               //   router.push('/dashboard');
+//               // }
+//             } catch (error) {
+//               console.error("Error storing user info (layout):", error);
+//             }
+//           } else {
+//             console.log("User info already in cookie (layout)");
+//             // Optionally, refresh user data if needed
+//           }
+//         } else {
+//           console.log("Email not verified, redirecting to verification page (layout)");
+//           if (window.location.href !== '/verify-email') {
+//             router.push('/verify-email');
+//           }
+//         }
+//       } else {
+//         console.log("User is signed out, redirecting to login (layout)");
+//         Cookies.remove("user");
+//         if (window.location.href !== '/auth') {
+//           router.push('/auth');
+//         }
+//       }
+//     });
+
+//     return () => unsubscribe();
+//   }, [])
+   
+
+//     return (
+//     <html lang="en">
+//       <UserProvider>
+//         <body>
+//           <main>{children}</main>
+//           <Toaster />
+//         </body>
+//       </UserProvider>
+//     </html>
+//   );
+// }

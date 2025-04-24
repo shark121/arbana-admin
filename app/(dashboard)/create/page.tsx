@@ -7,6 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Selector } from "../../../components/custom/selector";
 import { categoriesList } from "../../../data/categories";
 import { CategoriesComponent } from "../../../components/events/categoriesComponent";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Verified } from "lucide-react";
+import { Plug2Icon  as AddImage } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { z } from "zod";
 import { LocalUserType } from "../../../types";
 import AddTicket from "../../../components/events/AddTicket";
@@ -308,148 +313,466 @@ export default function CreateEvent() {
   //   console.log(e);
   // }
 
-  return (
-    <div className="">
-      <div className="h-[18rem] flex w-full flex-col p-4 gap-1">
-        {/* <FormLabel>Event Name</FormLabel> */}
-        <p className="text-sm font-medium">Event Name</p>
-        <Input
-          placeholder="Event Name"
-          onChange={(e) => setEventNameState(e.target.value)}
-        />
-        <p className="text-sm font-medium">Start Date</p>
+  // return (
+  //   <div className="">
+  //     <div className="h-[18rem] flex w-full flex-col p-4 gap-1">
+  //       {/* <FormLabel>Event Name</FormLabel> */}
+  //       <p className="text-sm font-medium">Event Name</p>
+  //       <Input
+  //         placeholder="Event Name"
+  //         onChange={(e) => setEventNameState(e.target.value)}
+  //       />
+  //       <p className="text-sm font-medium">Start Date</p>
 
-        <Calendar setDateState={setStartDateState} dateState={startDateState} />
-        <p className="text-sm font-medium">End Date</p>
+  //       <Calendar setDateState={setStartDateState} dateState={startDateState} />
+  //       <p className="text-sm font-medium">End Date</p>
 
-        <Calendar setDateState={setEndDateState} dateState={endDateState} />
-      </div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 p-4"
-          id="createEventForm"
-        >
-          {
-            <AddTicket
-              tickets={seatsState}
-              setTickets={setSeatsState}
-            />
-          }
-          <Selector
-            label="Genre"
-            items={categoriesList}
-            setCurrentItemState={setCurrentItem}
-          />
-          <div className="w-full ">{chosenCategoriesList}</div>
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="w-full h-[7rem] relative">
-            <FormLabel>Location</FormLabel>
-            <ShowPlaces
-              selected={selected}
-              selectedPlace={selectedPlace}
-              setSelected={setSelected}
-              setSelectedPlace={setSelectedPlace}
-            />
-          </div>
-          <FormField
-            control={form.control}
-            name="time"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Time</FormLabel>
-                <FormControl>
-                  <Input placeholder="Time" type="time" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="province"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Province</FormLabel>
-                <FormControl>
-                  <Input placeholder="province" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />{" "}
-          <FormField
-            control={form.control}
-            name="mobile"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Mobile</FormLabel>
-                <FormControl>
-                  <Input placeholder="+233" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This number will be used for payment disbursements and contact
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />{" "}
-          <FormField
-            control={form.control}
-            name="imageFile"
-            render={({ field }) => (
-              <FormItem className="flex  gap-4 items-center">
-                <div className="w-[10rem] aspect-square bg-gray-100 rounded-md flex items-center justify-center relative">
-                  {previewUrl ? (
-                    <img
-                      src={previewUrl}
-                      alt="image preview"
-                      className="h-full w-full"
+  //       <Calendar setDateState={setEndDateState} dateState={endDateState} />
+  //     </div>
+  //     <Form {...form}>
+  //       <form
+  //         onSubmit={form.handleSubmit(onSubmit)}
+  //         className="space-y-8 p-4"
+  //         id="createEventForm"
+  //       >
+  //         {
+  //           <AddTicket
+  //             tickets={seatsState}
+  //             setTickets={setSeatsState}
+  //           />
+  //         }
+  //         <Selector
+  //           label="Genre"
+  //           items={categoriesList}
+  //           setCurrentItemState={setCurrentItem}
+  //         />
+  //         <div className="w-full ">{chosenCategoriesList}</div>
+  //         <FormField
+  //           control={form.control}
+  //           name="description"
+  //           render={({ field }) => (
+  //             <FormItem>
+  //               <FormLabel>Description</FormLabel>
+  //               <FormControl>
+  //                 <Textarea placeholder="Description" {...field} />
+  //               </FormControl>
+  //               <FormMessage />
+  //             </FormItem>
+  //           )}
+  //         />
+  //         <div className="w-full h-[7rem] relative">
+  //           <FormLabel>Location</FormLabel>
+  //           <ShowPlaces
+  //             selected={selected}
+  //             selectedPlace={selectedPlace}
+  //             setSelected={setSelected}
+  //             setSelectedPlace={setSelectedPlace}
+  //           />
+  //         </div>
+  //         <FormField
+  //           control={form.control}
+  //           name="time"
+  //           render={({ field }) => (
+  //             <FormItem>
+  //               <FormLabel>Time</FormLabel>
+  //               <FormControl>
+  //                 <Input placeholder="Time" type="time" {...field} />
+  //               </FormControl>
+  //               <FormMessage />
+  //             </FormItem>
+  //           )}
+  //         />
+  //         <FormField
+  //           control={form.control}
+  //           name="province"
+  //           render={({ field }) => (
+  //             <FormItem>
+  //               <FormLabel>Province</FormLabel>
+  //               <FormControl>
+  //                 <Input placeholder="province" {...field} />
+  //               </FormControl>
+  //               <FormMessage />
+  //             </FormItem>
+  //           )}
+  //         />{" "}
+  //         <FormField
+  //           control={form.control}
+  //           name="mobile"
+  //           render={({ field }) => (
+  //             <FormItem>
+  //               <FormLabel>Mobile</FormLabel>
+  //               <FormControl>
+  //                 <Input placeholder="+233" {...field} />
+  //               </FormControl>
+  //               <FormDescription>
+  //                 This number will be used for payment disbursements and contact
+  //               </FormDescription>
+  //               <FormMessage />
+  //             </FormItem>
+  //           )}
+  //         />{" "}
+  //         <FormField
+  //           control={form.control}
+  //           name="imageFile"
+  //           render={({ field }) => (
+  //             <FormItem className="flex  gap-4 items-center">
+  //               <div className="w-[10rem] aspect-square bg-gray-100 rounded-md flex items-center justify-center relative">
+  //                 {previewUrl ? (
+  //                   <img
+  //                     src={previewUrl}
+  //                     alt="image preview"
+  //                     className="h-full w-full"
+  //                   />
+  //                 ) : (
+  //                   <CameraIcon size={20} strokeWidth={"1px"} />
+  //                 )}
+  //               </div>
+  //               <FormLabel>
+  //                 <EditIcon size={20} className="cursor-pointer" />
+  //               </FormLabel>
+  //               <FormControl>
+  //                 <Input
+  //                   className={"hidden"}
+  //                   type="file"
+  //                   accept="image/*"
+  //                   // max={"10000"}
+  //                   placeholder="Image"
+  //                   //commented because the added fields only accept strings
+  //                   // {...field}
+  //                   onChange={(e) => {
+  //                     const file = e.target.files?.[0];
+  //                     file && setImageFileState(file as unknown as File);
+  //                     if (file) {
+  //                       form.setValue("imageFile", file);
+  //                     }
+  //                   }}
+  //                 />
+  //               </FormControl>
+  //               <FormMessage />
+  //             </FormItem>
+  //           )}
+  //         />
+  //         <Button type="submit">Submit</Button>
+  //       </form>
+  //     </Form>
+  //   </div>
+  // );
+
+  return(
+
+      <Card className="w-full max-w-4xl mx-auto shadow-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">
+             Create Event
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="basic" className="w-full">
+            <TabsList className="grid grid-cols-3 mb-6">
+              <TabsTrigger value="basic">Basic Details</TabsTrigger>
+              <TabsTrigger value="location">Location & Time</TabsTrigger>
+              <TabsTrigger value="tickets">Tickets & Media</TabsTrigger>
+            </TabsList>
+
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+                id="createEventForm"
+              >
+                <TabsContent value="basic" className="space-y-6">
+                  <div className="flex w-full h-full p-4">
+                    <div className='w-full h-full flex flex-col gap-4'>
+                      <FormField
+                        control={form.control}
+                        name="imageFile"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Event Cover Image</FormLabel>
+                            <div className="flex flex-col items-start justify-between gap-4">
+                              <div className="w-60 aspect-square bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
+                                {previewUrl ? (
+                                  <img
+                                    src={previewUrl}
+                                    alt="Event cover"
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <AddImage size={'32'} />
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                <FormControl>
+                                  <Input
+                                    className="max-w-[10rem]"
+                                    type="file"
+                                    accept="image/*"
+                                    max="10000"
+                                    onChange={(e) => {
+                                      const file = e.target.files?.[0];
+                                      if (file) {
+                                        setImageFileState(file);
+                                        form.setValue('imageFile', file);
+                                      }
+                                    }}
+                                  />
+                                </FormControl>
+                                {/* <FormDescription>
+                                  Upload a high-quality image (max 10MB)
+                                </FormDescription> */}
+                              </div>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div>
+                      <FormItem className="space-y-2 w-[10rem]">
+                        <FormLabel className="text-sm font-medium">
+                          Event Name
+                        </FormLabel>
+
+                        <Input
+                          placeholder="Enter a compelling event name"
+                          onChange={(e) => setEventNameState(e.target.value)}
+                          defaultValue={""}
+                          className="w-[25rem]"
+                        />
+                      </FormItem>
+
+                      <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Describe your event in detail"
+                                {...field}
+                                className="min-h-32 w-[25rem]"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  {/* <div className="space-y-2">
+                    <FormField
+                      control={form.control}
+                      name="time"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Start Time</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Select time"
+                              type="time"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  ) : (
-                    <CameraIcon size={20} strokeWidth={"1px"} />
-                  )}
-                </div>
-                <FormLabel>
-                  <EditIcon size={20} className="cursor-pointer" />
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className={"hidden"}
-                    type="file"
-                    accept="image/*"
-                    // max={"10000"}
-                    placeholder="Image"
-                    //commented because the added fields only accept strings
-                    // {...field}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      file && setImageFileState(file as unknown as File);
-                      if (file) {
-                        form.setValue("imageFile", file);
-                      }
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-    </div>
-  );
+                  </div> */}
+
+                  <div className="space-y-2">
+                    <Selector
+                      label="Genre"
+                      items={categoriesList}
+                      setCurrentItemState={setCurrentItem}
+                    />
+                    <div className="min-h-12 py-2">{chosenCategoriesList}</div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="location" className="space-y-6">
+                  <div className="space-y-2 w-full h-full flex flex-col my-6">
+                    <FormLabel>Event Location</FormLabel>
+                    <div className="my-6 w-full h-[3rem]">
+                      <ShowPlaces
+                        selected={selected}
+                        selectedPlace={selectedPlace}
+                        setSelected={setSelected}
+                        setSelectedPlace={setSelectedPlace}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col space-y-2">
+                    {/* <FormField
+                      control={form.control}
+                      name="province"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Province/State</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter province or state"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> */}
+
+                    <div className="grid md:grid-cols-2 gap-6 my-6">
+                      <div className="space-y-2">
+                        <FormLabel className="text-sm font-medium">
+                          Start Date
+                        </FormLabel>
+                        <div className="border rounded-md p-3">
+                          <Calendar
+                            setDateState={setStartDateState}
+                            dateState={startDateState}
+                            defaultDate={
+                              new Date()
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel className="text-sm font-medium">
+                          End Date
+                        </FormLabel>
+                        <div className="border rounded-md p-3">
+                          <Calendar
+                            setDateState={setEndDateState}
+                            dateState={endDateState}
+                            defaultDate={
+                              new Date()
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <FormField
+                        control={form.control}
+                        name="time"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Start Time</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Select time"
+                                type="time"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="mobile"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Contact Number</FormLabel>
+                          <FormControl>
+                            <Input placeholder="+233" {...field} />
+                          </FormControl>
+                          <FormDescription>
+                            For payment disbursements and contact
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="tickets" className="space-y-6">
+                  <div className="space-y-2">
+                    <FormLabel className="text-lg font-medium">
+                      Ticket Information
+                    </FormLabel>
+                    <AddTicket
+                      tickets={seatsState}
+                      setTickets={setSeatsState}
+                    />
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  {/* <div className="space-y-4">
+                    <FormLabel className="text-lg font-medium">
+                      Event Details
+                    </FormLabel>
+
+                   
+
+                    {/* <FormField
+                      control={form.control}
+                      name="imageFile"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Event Cover Image</FormLabel>
+                          <div className="flex items-start gap-4">
+                            <div className="w-40 aspect-square bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
+                              {previewUrl ? (
+                                <img
+                                  src={previewUrl}
+                                  alt="Event cover"
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                <AddImage className="text-gray-400" size={32} />
+                              )}
+                            </div>
+                            <div className="space-y-2">
+                              <FormControl>
+                                <Input
+                                  className="max-w-xs"
+                                  type="file"
+                                  accept="image/*"
+                                  max="10000"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                      setImageFileState(file);
+                                      form.setValue('imageFile', file);
+                                    }
+                                  }}
+                                />
+                              </FormControl>
+                              <FormDescription>
+                                Upload a high-quality image (max 10MB)
+                              </FormDescription>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> 
+                  </div> */}
+                </TabsContent>
+
+                <CardFooter className="flex justify-end border-t pt-6 mt-6">
+                  <Button
+                    type="submit"
+                    className="bg-primary hover:bg-primary/90 text-white"
+                  >
+                    <span>Create Event</span>
+                    <Verified className="ml-2 h-5 w-5" />
+                  </Button>
+                </CardFooter>
+              </form>
+            </Form>
+          </Tabs>
+        </CardContent>
+      </Card>
+    )
+  
 }

@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { getAuth, signOut } from "firebase/auth";
 import { twMerge } from "tailwind-merge";
 import Cookies from "js-cookie";
 import {
@@ -70,6 +71,25 @@ export function rgbToHex(r: number, g: number, b: number) {
   const hex = ((r << 16) | (g << 8) | b).toString(16);
   return "#" + "0".repeat(6 - hex.length) + hex;
 }
+
+
+export async function logoutFirebase() {
+  const auth = getAuth();
+  try {
+    await signOut(auth);
+    // Sign-out successful.
+    console.log("User signed out successfully.");
+    // You might want to redirect the user or update your UI here.
+  } catch (error) {
+    // An error happened.
+    console.error("Error signing out:", error);
+    // Handle the error appropriately (e.g., display an error message to the user).
+  }
+}
+
+// You can then call this function when the user clicks a "Logout" button or takes a similar action.
+// Example:
+// <button onClick={logoutFirebase}>Logout</button>
 
 // Example usage:
 // const username = getCookie('username');

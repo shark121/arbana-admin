@@ -5,7 +5,7 @@ const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
 const statisticsSchema = z.object({
   date: z.string(),
-  booking: z.array(
+  bookings: z.array(
     z.object({
       tier: z.number(),
       userId: z.string(),

@@ -1,5 +1,5 @@
+
 import { Button } from '@/components/ui/button';
-// import { auth, signOut } from '@/lib/auth';
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { logoutFirebase } from '@/lib/utils';
 
 export async function User() {
   // let session = await auth();
@@ -35,7 +36,7 @@ export async function User() {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem onClick={async()=>logoutFirebase()} >Logout</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
         {/* {user ? (

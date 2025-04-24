@@ -77,11 +77,11 @@ export default function AddTicket({
   };
 
   return (
-    <div className='flex  items-center justify-center flex-wrap bg-gray-100'>
-      <div className="flex flex-col max-w-2xl mx-auto ">
+    <div className='flex  items-center justify-center flex-wrap '>
+      <div className="flex justify-between max-w-2xl mx-auto gap-4">
         <Card>
           <CardHeader>
-            <CardTitle>Add Ticket Details</CardTitle>
+            <CardTitle>Add Ticket Types</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -143,7 +143,7 @@ export default function AddTicket({
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {tickets.map((ticket) => (
-                <Card key={ticket.tier} className="bg-white">
+                <Card key={ticket.tier} className="bg-white w-[20rem]">
                   <CardContent className="flex items-center justify-between p-4">
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2">
