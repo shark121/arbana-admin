@@ -1,17 +1,27 @@
-"use client";
-import { useState, useEffect } from "react";
-import SignInComponent from "@/authentication/signInComponent";
-import SignUpComponent from "@/authentication/signUpComponent";
-import Link from "next/link";
-
-
+'use client';
+import { useState, useEffect } from 'react';
+import SignInComponent from '@/authentication/signInComponent';
+import SignUpComponent from '@/authentication/signUpComponent';
+import Link from 'next/link';
 
 export default function Auth() {
   const [hasAccount, setHasAccount] = useState(true);
- 
+
   return (
     <div className="flex flex-col items-center justify-center ">
-      {hasAccount ? <SignInComponent className="min-w-[50rem]" setHasAccount={setHasAccount}/> : <SignUpComponent />}
+      {hasAccount ? (
+        <SignInComponent
+          className="min-w-[50rem]"
+          setHasAccount={setHasAccount}
+          hasAccount={hasAccount}
+        />
+      ) : (
+        <SignUpComponent
+          setHasAccount={setHasAccount}
+          hasAccount={hasAccount}
+          className="min-w-[50rem]"
+        />
+      )}
       <div className="text-[0.8rem] flex w-[15rem] cursor-pointer">
         {/* {hasAccount ? (
           <div className="w-full flex justify-between">

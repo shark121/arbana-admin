@@ -29,9 +29,9 @@ export default function LoginForm({
 }: 
 {
   hasAccount : boolean, 
-  setHasAccount : React.Dispatch<React.SetStateAction<boolean>>, 
-  className: Pick<React.ComponentPropsWithoutRef<"div">, "className" >,
-  props : Omit<React.ComponentPropsWithoutRef<"div">, "className" >
+  setHasAccount: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: React.HTMLAttributes<HTMLDivElement>["className"];
+  props?: Omit<React.ComponentPropsWithoutRef<"div">, "className">;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,7 +76,7 @@ export default function LoginForm({
   }
 
   return (
-<div className={cn("flex flex-col gap-2", className)} {...props}>
+<div className={cn("flex flex-col gap-2 min-h-[100vh] justify-center", className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
