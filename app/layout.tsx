@@ -69,7 +69,8 @@ export default function RootLayout({
 
       if (user) {
         console.log("User is signed in (layout)");
-        if (user.emailVerified) {
+        // if (user.emailVerified) {
+        if (true) {
           console.log("Email is verified (layout)");
           const userCookie = Cookies.get("user");
           const userDoesNotExistInCookie = !userCookie;
@@ -91,14 +92,14 @@ export default function RootLayout({
           }
         } else {
           console.log("Email not verified, redirecting to verification page (layout)");
-          if (router.pathname !== '/verify-email') {
+          if (window.location.href !== '/verify-email') {
             router.push('/verify-email');
           }
         }
       } else {
         console.log("User is signed out, redirecting to login (layout)");
         Cookies.remove("user");
-        if (router.pathname !== '/auth') {
+        if (window.location.href !== '/auth') {
           router.push('/auth');
         }
       }

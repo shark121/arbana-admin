@@ -10,10 +10,10 @@ export default function Auth() {
   const [hasAccount, setHasAccount] = useState(true);
  
   return (
-    <div className="flex flex-col items-center justify-center m-0 p-0 h-[100vh] w-[100wv] overflow-hidden ">
-      {hasAccount ? <SignInComponent /> : <SignUpComponent />}
+    <div className="flex flex-col items-center justify-center ">
+      {hasAccount ? <SignInComponent className="min-w-[50rem]" setHasAccount={setHasAccount}/> : <SignUpComponent />}
       <div className="text-[0.8rem] flex w-[15rem] cursor-pointer">
-        {hasAccount ? (
+        {/* {hasAccount ? (
           <div className="w-full flex justify-between">
             <div onClick={() => setHasAccount(false)}>New here? Sign up</div>
             <Link
@@ -27,7 +27,7 @@ export default function Auth() {
           <div onClick={() => setHasAccount(!hasAccount)} className="">
             Already have an account? sign in
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
